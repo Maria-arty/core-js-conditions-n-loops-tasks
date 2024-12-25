@@ -445,27 +445,41 @@ function sortByAsc(arr) {
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
 function shuffleChar(str, iterations) {
-  let newStr = '';
   const arr = [];
   for (let i = 0; i < str.length; i += 1) {
     arr[i] = str[i];
   }
-  const iterNum = Math.floor((str.length - 1) / 2);
-  for (let k = 0; k < iterations; k += 1) {
-    for (let i = iterNum; i > 0; i -= 1) {
-      for (let j = iterNum - i + 1; j <= i * 2 + 1; j += 2) {
-        if (j + 1 < arr.length) {
-          const temp = arr[j];
-          arr[j] = arr[j + 1];
-          arr[j + 1] = temp;
-        }
+  const length = arr.length % 2 === 0 ? arr.length : arr.length - 1;
+  const iter = iterations % length;
+  for (let i = 0; i < iter; i += 1) {
+    const evenNumbers = [];
+    let evenCount = 0;
+    const oddNumbers = [];
+    let oddCount = 0;
+    for (let j = 0; j < arr.length; j += 1) {
+      if (j % 2 === 0) {
+        evenNumbers[evenCount] = arr[j];
+        evenCount += 1;
+      } else {
+        oddNumbers[oddCount] = arr[j];
+        oddCount += 1;
       }
     }
+    let index = 0;
+    for (let k = 0; k < evenCount; k += 1) {
+      arr[index] = evenNumbers[k];
+      index += 1;
+    }
+    for (let m = 0; m < oddCount; m += 1) {
+      arr[index] = oddNumbers[m];
+      index += 1;
+    }
   }
-  for (let i = 0; i < str.length; i += 1) {
-    newStr += arr[i];
+  let myStr = '';
+  for (let i = 0; i < arr.length; i += 1) {
+    myStr += arr[i];
   }
-  return newStr;
+  return myStr;
 }
 
 /**
