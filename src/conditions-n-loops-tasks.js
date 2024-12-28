@@ -450,29 +450,48 @@ function shuffleChar(str, iterations) {
     arr[i] = str[i];
   }
   const length = arr.length % 2 === 0 ? arr.length : arr.length - 1;
-  const iter = iterations % length;
-  for (let i = 0; i < iter; i += 1) {
-    const evenNumbers = [];
-    let evenCount = 0;
-    const oddNumbers = [];
-    let oddCount = 0;
-    for (let j = 0; j < arr.length; j += 1) {
-      if (j % 2 === 0) {
-        evenNumbers[evenCount] = arr[j];
-        evenCount += 1;
-      } else {
-        oddNumbers[oddCount] = arr[j];
-        oddCount += 1;
-      }
-    }
+  let iter = iterations % length;
+  let count = 0;
+  for (let i = 0; i < iterations; i += 1) {
     let index = 0;
-    for (let k = 0; k < evenCount; k += 1) {
-      arr[index] = evenNumbers[k];
+    const tempArr = [];
+    for (let j = 0; j < arr.length; j += 2) {
+      tempArr[index] = arr[j];
       index += 1;
     }
-    for (let m = 0; m < oddCount; m += 1) {
-      arr[index] = oddNumbers[m];
+    for (let k = 1; k < arr.length; k += 2) {
+      tempArr[index] = arr[k];
       index += 1;
+    }
+    for (let f = 0; f < arr.length; f += 1) {
+      arr[f] = tempArr[f];
+    }
+    count += 1;
+    let testStr = '';
+    for (let g = 0; g < arr.length; g += 1) {
+      testStr += tempArr[g];
+    }
+    if (str === testStr) {
+      iter = iterations % count;
+      break;
+    }
+  }
+  for (let i = 0; i < str.length; i += 1) {
+    arr[i] = str[i];
+  }
+  for (let i = 0; i < iter; i += 1) {
+    let index = 0;
+    const tempArr = [];
+    for (let j = 0; j < arr.length; j += 2) {
+      tempArr[index] = arr[j];
+      index += 1;
+    }
+    for (let k = 1; k < arr.length; k += 2) {
+      tempArr[index] = arr[k];
+      index += 1;
+    }
+    for (let f = 0; f < arr.length; f += 1) {
+      arr[f] = tempArr[f];
     }
   }
   let myStr = '';
