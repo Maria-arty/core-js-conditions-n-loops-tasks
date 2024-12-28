@@ -410,19 +410,42 @@ function rotateMatrix(matrix) {
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
 function sortByAsc(arr) {
-  const n = arr.length;
-  const newArr = arr;
-  for (let k = 0; k < n - 1; k += 1) {
-    let sorted = false;
-    for (let i = 0; i < n - 1 - k; i += 1) {
-      if (newArr[i] > newArr[i + 1]) {
-        const temp = newArr[i];
-        newArr[i] = newArr[i + 1];
-        newArr[i + 1] = temp;
-        sorted = true;
-      }
+  const myArr = arr;
+  if (myArr.length <= 1) return myArr;
+  const pivot = myArr[myArr.length - 1];
+  const left = new Array(myArr.length);
+  const right = new Array(myArr.length);
+  let leftIndex = 0;
+  let rightIndex = 0;
+  for (let j = 0; j < myArr.length - 1; j += 1) {
+    if (myArr[j] < pivot) {
+      left[leftIndex] = myArr[j];
+      leftIndex += 1;
+    } else {
+      right[rightIndex] = myArr[j];
+      rightIndex += 1;
     }
-    if (!sorted) break;
+  }
+  const trimmedLeft = new Array(leftIndex);
+  const trimmedRight = new Array(rightIndex);
+  for (let l = 0; l < trimmedLeft.length; l += 1) {
+    trimmedLeft[l] = left[l];
+  }
+  for (let m = 0; m < trimmedRight.length; m += 1) {
+    trimmedRight[m] = right[m];
+  }
+  const sortedLeft = sortByAsc(trimmedLeft);
+  const sortedRight = sortByAsc(trimmedRight);
+  let index = 0;
+  for (let i = 0; i < sortedLeft.length; i += 1) {
+    myArr[index] = sortedLeft[i];
+    index += 1;
+  }
+  myArr[index] = pivot;
+  index += 1;
+  for (let i = 0; i < sortedRight.length; i += 1) {
+    myArr[index] = sortedRight[i];
+    index += 1;
   }
   return arr;
 }
